@@ -1,0 +1,22 @@
+{
+    "swaggerDefinition": {
+        "info": {
+            "title": "Movex App",
+            "description": "Application to scraping and offer movies to download",
+            "termsOfService": "",
+            "contact": {
+                "name": "Denis de Almeida Borges",
+                "url": "",
+                "email": "denis_almeida.borges@hotmail.com"
+            },
+            "license": {
+                "name": "NodeJs",
+                "url": "http://localhost:3333"
+            },
+            "version": "1.0.0"
+        },
+        "host": "http://localhost:3333",
+        "basePath": "/"
+    },
+    "apis":["src/routes.js"]
+}

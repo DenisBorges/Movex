@@ -1,0 +1,6 @@
+{
+    "port": 9091,			
+    "host": "10.0.1.56",		
+    "username": "pi",	
+    "password": "Pa$$w0rd"
+}
