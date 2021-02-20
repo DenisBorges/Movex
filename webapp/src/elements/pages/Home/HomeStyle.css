@@ -1,0 +1,41 @@
+.homepage {
+    margin: 10px;
+    background-color: #D3D3D3;
+}
+
+.homepage_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: flex-start;
+}
+
+.movieCard {
+    margin: 20px;
+}
+
+.movieImg {
+    height: 50vh;
+}
+
+.magnetLinksContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonMagnet {
+    margin: 20px;
+}
+
+.movieInfo{
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.movieInfo label:not(.text-muted) {
+font-weight: bold;
+}

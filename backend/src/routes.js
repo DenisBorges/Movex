@@ -50,10 +50,10 @@ route.post('/movies/getmagnetlinks',
 route.post('/transmission/torrentaddstart',
   transmissionValidator.TorrentAddAndStartValidator(),
   transmissionController.TorrentAddAndStart);
-
 route.post('/transmission/torrentgetbyname', transmissionController.TorrentGetByName);
 route.get('/transmission/freespace', transmissionController.FreeSpace);
-
 route.get('/transmission/getallactives', transmissionController.GetAllActiveTorrents);
+route.get('/transmission/verifytorrentdata/:id?', transmissionController.VerifyTorrentData);
+route.get('/transmission/getbyid/:id?', transmissionController.GetById);
 
 module.exports = route;

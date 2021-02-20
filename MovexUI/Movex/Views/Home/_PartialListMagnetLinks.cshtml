@@ -1,0 +1,80 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Movex.Entity
+@model List<MagnetLink>
+@{
+    <style>
+        .span-btn {
+            width: 100%;
+            padding: 0 20px;
+            margin-top: 10px;
+            word-break: normal;
+            text-align: center;
+            border: 2px;
+            color: white;
+            background: #17a2b8;
+            border-radius: 10px;
+            transition: all 1s;
+            min-height: 50px;
+        }
+
+            .span-btn:hover {
+                background: #138496;
+                cursor: pointer;
+            }
+    </style>
+
+    @foreach (var item in Model)
+    {
+        <span id="@Model.IndexOf(item)"
+              class="span-btn"
+              onclick="download(this,'@Html.Raw(item.Href)')">
+            @item.Title
+        </span>
+        @*<button id="@Model.IndexOf(item)"
+                class="btn btn-info"
+                onclick="download(this,'@Html.Raw(item.Href)')">
+            @item.Title
+            </button>*@
+
+    }
+
+
+    <script>
+
+        function download(btn, href) {
+
+            var title = $(btn).parent().siblings('h5').text();
+       
+            var movieId = $(btn).closest('.card').attr('id');
+
+            let mag = { "idMovie": parseInt(movieId), "Title": title, "Href": href };
+
+            $.ajax({
+                url: '../Home/StartTorrent',
+                data: JSON.stringify(mag),
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: (result) => {
+                 
+                    if (result) {
+
+                        let parent = $(btn).parent();
+
+                        parent.hide();
+                        parent.siblings('.baixado').show();
+
+                    }
+                        
+                },
+                error: (error) => { alert('Ocorreu um erro durante a solicitação') },
+                beforeSend: () => blockUI(),
+                complete: () => unblockUi()
+            });
+        }
+
+    </script>
+
+}

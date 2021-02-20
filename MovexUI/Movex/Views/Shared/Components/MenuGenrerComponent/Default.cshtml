@@ -1,0 +1,21 @@
+﻿@model List<MenuExibicao>
+
+<style>
+    .scrollable-menu {
+        height: auto;
+        max-height: 200px;
+        overflow-x: hidden;
+    }
+</style>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Genêros
+        </a>
+        <div class="dropdown-menu scrollable-menu" aria-labelledby="navbarDropdown">
+            @foreach (var item in Model)
+            {
+                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="MovieByGenre" asp-route-genero="@item.Value">@item.Nome</a>
+            }
+        </div>
+    </li>

@@ -1,0 +1,153 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Movex.Entity
+@model List<Movie>
+
+@{
+
+    <style>
+        .movie-container {
+            display: grid;
+            grid-template-columns: 30% 70%;
+        }
+
+        .magnetLinksContainer {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .movieCard {
+            margin: 20px;
+        }
+
+        .movieImg {
+            height: 50vh;
+        }
+
+        .movie-list {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .magnetLinksContainer button {
+            margin-top: 10px;
+            width: 70%;
+            word-break: keep-all;
+            font-size: inherit;
+        }
+
+        .card {
+            font-size: 1.15rem;
+            margin-top: 5px;
+            width: 18rem;
+        }
+
+        @@media screen and (max-width: 600px) {
+            .card:not(:first-child) {
+                margin-top: 30px;
+            }
+            .card {
+                width: 80%;
+            }
+
+            .movie-list {
+                justify-content: center;
+            }
+        }
+
+        .baixado {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            border: 1px black;
+            background: darkseagreen;
+            border-radius: 10px;
+            font-weight: 800;
+        }
+
+        .hide{
+            display:none;
+        }
+
+    </style>
+
+    <div class="movie-list">
+        @foreach (Movie item in Model)
+        {
+            var id = Model.IndexOf(item);
+
+            <div id="@id" class="card">
+                <img class="card-img-top" src="@item.ImgSrc" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Titulo</h5>
+                    <div class="movie-container">
+                        <label className="mb-2 text-muted">Nota:</label>
+                        <label>@item.Nota</label>
+                        <label className="mb-2 text-muted">Idioma:</label>
+                        <label>@item.Idioma</label>
+                        <label className="mb-2 text-muted">Qual:</label>
+                        <label>@item.Qualidade</label>
+                        <label className="mb-2 text-muted">Gênero:</label>
+                        <label>@item.Genero</label>
+                    </div>
+                    <div class="magnetLinksContainer @string.Format("{0}",item.isDownloaded ? "hide":"")">
+                        <button id="@string.Format("{0}_{1}",id.ToString(),"btn")"
+                                class="btn btn-info"
+                                onclick="loadMagnetLink(this,'@Html.Raw(@item.Titulo)','@Html.Raw(@item.Link)')">
+                            Download
+                        </button>
+                    </div>
+                    <div class="baixado @string.Format("{0}",item.isDownloaded ? "":"hide")" >
+                        <label>BAIXADO</label>
+                        <img src="~/img/iconfinder_check.png" />
+                    </div>
+
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <script>
+   
+        disableNext(Boolean('@Html.Raw(Model.Any())'));
+
+        function loadMagnetLink(button,_title, _link) {
+
+
+
+            var mov = { "Link": _link, "Titulo": _title };
+            
+
+            $.ajax({
+                url: '../Home/_PartialMagnetLinks',
+                type: 'POST',
+                dataType: 'html',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(mov),
+                success: function (data) {
+                    $(this).closest('div').html(data);
+                }.bind(button),
+                error: () => { alert('error') },
+                beforeSend: () => blockUI(),
+                complete: () => unblockUi()
+            });
+        }
+
+        function disableNext(isDisabled) {
+            
+            if(isDisabled)
+               $('.pagination > .page-item > a[name="next"]').attr('disabled');
+        }
+
+    </script>
+
+}

@@ -54,7 +54,7 @@ function getMovieData(listmovies) {
 
     var allmoviewData = [];
 
-    listmovies.each((index, item) => {
+    listmovies.each((index,item) => {
 
         var movieData = [];
 

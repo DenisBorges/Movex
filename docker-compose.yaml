@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  api:  
+    build: "./backend/"
+    image: "movex/api"
+    restart: always
+    ports:
+      - "0.0.0.0:3333:3333"
+    networks:
+      - my-network
+  web:
+    build: "./MovexUI/"
+    image: "movex/web"
+    restart: always
+    ports:
+     - "0.0.0.0:5000:80"
+    depends_on:
+     - api
+    links:
+     - api
+    networks:
+      - my-network
+networks:
+  my-network:
+    external: true

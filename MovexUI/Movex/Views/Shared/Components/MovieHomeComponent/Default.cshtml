@@ -1,0 +1,94 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Movex.Entity
+@model List<Movie>
+
+@{
+
+    <style>
+        .movie-container {
+            display: grid;
+            grid-template-columns: 30% 70%;
+        }
+
+        .magnetLinksContainer {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .movieCard {
+            margin: 20px;
+        }
+
+        .movieImg {
+            height: 50vh;
+        }
+
+        .movie-list {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: left;
+            align-items: flex-start;
+        }
+
+        .buttonMagnet {
+            margin: 20px;
+        }
+    </style>
+
+    <div class="movie-list">
+        @foreach (Movie item in Model)
+        {
+            var id = Model.IndexOf(item);
+
+            <div id="@id" class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@item.ImgSrc" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Titulo</h5>
+                    <div class="movie-container">
+                        <label className="mb-2 text-muted">Nota:</label>
+                        <label>@item.Nota</label>
+                        <label className="mb-2 text-muted">Idioma:</label>
+                        <label>@item.Idioma</label>
+                        <label className="mb-2 text-muted">Qual:</label>
+                        <label>@item.Qualidade</label>
+                        <label className="mb-2 text-muted">Gênero:</label>
+                        <label>@item.Genero</label>
+                    </div>
+                    <div>
+                        <button id="@string.Format("{0}_{1}",id.ToString(),"btn")"
+                                class="buttonMagnet"
+                                onclick="loadMagnetLink(@item.Titulo,@item.Link)">
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <script>
+
+        function loadMagnetLink(title,url) {
+
+            $.ajax({
+                url: '../Transmission/',
+                type: 'POST',
+                data: {title,url},
+                success: function (data) {
+                    $(this).closest('div').html(data);
+                }.bind(this),
+                error: () => { alert('error')},
+                complete: () => { }
+            });
+        }
+
+    </script>
+
+}
