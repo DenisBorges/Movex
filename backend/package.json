@@ -19,7 +19,7 @@
     "express": "^4.17.1",
     "get-folder-size": "^2.0.1",
     "helmet": "^3.22.0",
-    "knex": "^0.20.13",
+    "knex": "^2.4.0",
     "mongoose": "^5.9.2",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
